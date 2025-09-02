@@ -17,7 +17,7 @@ class CartService
   attr_reader :cart, :product_id, :quantity
 
   def create_cart_product
-    return CartProduct.new(cart:, product:, quantity:) if cart_products.blank?
+    return CartProduct.create(cart:, product:, quantity:) if cart_products.blank?
 
     cart_product = cart_products.first
     cart_product.quantity += quantity.to_i

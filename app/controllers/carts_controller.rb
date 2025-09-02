@@ -6,7 +6,7 @@ class CartsController < ApplicationController
   end
 
   def show
-    render json: @cart
+    render json: current_cart, serializer: CartSerializer
   end
 
   def create
