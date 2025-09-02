@@ -1,6 +1,4 @@
 class CartsController < ApplicationController
-  before_action :set_cart, only: %i[ show ]
-
   def index
     @carts = Cart.all
 
@@ -12,18 +10,24 @@ class CartsController < ApplicationController
   end
 
   def create
-    @cart = CartService.new.create_cart
+    product_id = params.require(:product_id)
+    quantity = params.require(:quantity)
 
-    if @cart.save
-      render json: @cart, status: :created, location: @cart
+    @cart = CartService.new(current_cart, product_id, quantity).add_product
+
+    puts @cart.inspect
+    if @cart.persisted?
+      render json: @cart, serializer: CartSerializer, status: :ok
     else
-      render json: @cart.errors, status: :unprocessable_entity
+      render json: { errors: @cart.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   private
 
-  def set_cart
-    @cart = Cart.find(params[:id])
+  def current_cart
+    Cart.find_or_create_by(id: session[:cart_id]).tap do |cart|
+      session[:cart_id] ||= cart.id
+    end
   end
 end
