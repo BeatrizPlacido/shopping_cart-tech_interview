@@ -15,7 +15,11 @@ services:
     volumes:
       - redis_data:/data
   web:
-    build: .
+    build:
+      context: .
+      args:
+        UID: ${UID:-1000}
+        GID: ${GID:-1000}
     command: bundle exec rails server -b 0.0.0.0
     volumes:
       - .:/rails
