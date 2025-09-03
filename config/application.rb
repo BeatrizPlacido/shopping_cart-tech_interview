@@ -32,5 +32,16 @@ module Store
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use config.session_store, config.session_options
     config.active_job.queue_adapter = :sidekiq
+
+    # Adicione esta linha para garantir que o sidekiq-scheduler leia o arquivo de configuração
+    config.after_initialize do
+      Sidekiq.configure_server do |config|
+        schedule_file = Rails.root.join('config', 'sidekiq.yml')
+        if File.exist?(schedule_file)
+          Sidekiq::Scheduler.dynamic = true
+          Sidekiq::Scheduler.reload_schedule!
+        end
+      end
+    end
   end
 end
