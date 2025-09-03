@@ -1,8 +1,15 @@
-#!/bin/bash -e
+#!/bin/sh
 
-# If running the rails server then create or migrate existing database
-if [ "${1}" == "./bin/rails" ] && [ "${2}" == "server" ]; then
-  ./bin/rails db:prepare
+set -e
+
+if [ -f /rails/tmp/pids/server.pid ]; then
+  rm /rails/tmp/pids/server.pid
 fi
 
-exec "${@}"
+echo "Checking/installing gems..."
+bundle check || bundle install
+
+echo "Running database migrations..."
+bundle exec rails db:migrate
+
+exec "$@"
