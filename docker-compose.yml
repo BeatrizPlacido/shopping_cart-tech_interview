@@ -33,6 +33,24 @@ services:
       - POSTGRES_PASSWORD=password
       - REDIS_URL=redis://redis:6379/0
 
+  worker:
+    build:
+      context: .
+      args:
+        UID: ${UID:-1000}
+        GID: ${GID:-1000}
+    entrypoint: ""
+    command: bundle exec sidekiq -C config/sidekiq.yml
+    volumes:
+      - .:/rails
+    depends_on:
+      - db
+      - redis
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - REDIS_URL=redis://redis:6379/0
+
   # test:
   #   build: .
   #   command: bundle exec rspec
