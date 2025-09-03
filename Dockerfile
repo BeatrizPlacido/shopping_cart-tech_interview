@@ -37,6 +37,9 @@ RUN bundle exec bootsnap precompile app/ lib/
 # Final stage for app image
 FROM base
 
+ARG UID=1000
+ARG GID=1000
+
 # Install packages needed for deployment
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y curl libvips postgresql-client redis-tools && \
@@ -47,7 +50,8 @@ COPY --from=build /usr/local/bundle /usr/local/bundle
 COPY --from=build /rails /rails
 
 # Run and own only the runtime files as a non-root user for security
-RUN useradd rails --create-home --shell /bin/bash && \
+RUN groupadd -g $GID --system rails && \
+    useradd -u $UID -g $GID --create-home --shell /bin/bash rails && \
     chown -R rails:rails db log storage tmp
 USER rails:rails
 
