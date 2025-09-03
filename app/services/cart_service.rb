@@ -6,19 +6,21 @@ class CartService
   end
 
   def add_product
+    raise ArgumentError, 'Product does not exist' if product.blank?
+    raise ArgumentError, 'Quantity must be greater than zero' if quantity.to_i < 1
+    raise StandardError, 'Cannot add products to a completed or expired cart' if cart.completed? || cart.expired?
+
     create_cart_product
-    update_cart_total_price
+    cart.mark_as_open if cart.abandoned?
 
     cart.reload
   end
 
   def remove_product
-    raise ActiveRecord::RecordNotFound, 'Product does not exists on current cart session' if cart_product.blank? || cart_product.quantity < 1
+    raise ActiveRecord::RecordNotFound, 'Product does not exists on current cart' if cart_product.blank? || cart_product.quantity < 1
 
-    cart_product.quantity -= quantity.to_i
-    cart_product.save
-    cart_product.destroy if cart_product.quantity.zero?
-    update_cart_total_price
+    remove_product_from_cart
+    cart.mark_as_open if cart.abandoned?
 
     cart.reload
   end
@@ -28,14 +30,16 @@ class CartService
   attr_reader :cart, :product_id, :quantity
 
   def create_cart_product
-    return CartProduct.create!(cart:, product:, quantity:) if cart_products.blank?
+    return CartProduct.create!(cart:, product:, quantity:) if cart_product.blank?
 
     cart_product.quantity += quantity.to_i
     cart_product.save
   end
 
-  def update_cart_total_price
-    cart.update(total_price: cart.calculate_total_price)
+  def remove_product_from_cart
+    cart_product.quantity -= quantity.to_i
+    cart_product.save
+    cart_product.destroy if cart_product.quantity.zero?
   end
 
   def product
