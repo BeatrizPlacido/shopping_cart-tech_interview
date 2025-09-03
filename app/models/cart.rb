@@ -41,8 +41,6 @@ class Cart < ApplicationRecord
     end
   end
 
-  private
-
   def inactive?
     updated_at < 3.hour.ago
   end

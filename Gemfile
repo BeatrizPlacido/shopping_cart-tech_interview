@@ -8,6 +8,7 @@ gem "puma", ">= 5.0"
 gem "rails", "~> 7.1.3", ">= 7.1.3.2"
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
+gem 'aasm', '~> 5.5', '>= 5.5.1'
 gem 'active_model_serializers', '~> 0.10.15'
 
 gem 'redis', '~> 5.2'
