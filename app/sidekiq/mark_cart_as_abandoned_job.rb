@@ -13,7 +13,7 @@ class MarkCartAsAbandonedJob
 
   def mark_inactive_carts_as_abandoned
     abandoned_candidate_carts = Cart.where(status: 'open')
-                                    .where('updated_at < ?', INACTIVITY_THRESHOLDs.ago)
+                                    .where('updated_at < ?', INACTIVITY_THRESHOLD.ago)
 
     return if abandoned_candidate_carts.blank?
 
