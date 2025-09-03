@@ -15,19 +15,20 @@ class CartsController < ApplicationController
 
     @cart = CartService.new(current_cart, product_id, quantity).add_product
 
-    puts @cart.inspect
-    if @cart.persisted?
-      render json: @cart, serializer: CartSerializer, status: :ok
-    else
-      render json: { errors: @cart.errors.full_messages }, status: :unprocessable_entity
-    end
+    render json: @cart, serializer: CartSerializer, status: :created
+  end
+
+  def destroy
+    product_id = params.require(:id)
+
+    @cart = CartService.new(current_cart, product_id).remove_product
+
+    render json: @cart, serializer: CartSerializer, status: :ok
   end
 
   private
 
   def current_cart
-    Cart.find_or_create_by(id: session[:cart_id]).tap do |cart|
-      session[:cart_id] ||= cart.id
-    end
+    Cart.last
   end
 end
