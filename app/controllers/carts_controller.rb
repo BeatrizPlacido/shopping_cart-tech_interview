@@ -35,7 +35,10 @@ class CartsController < ApplicationController
   private
 
   def current_cart
-    ## ajustar para pegar o carrinho da sessão
-    Cart.last
+    Cart.find(session[:cart_id])
+  rescue ActiveRecord::RecordNotFound
+    cart = Cart.create!(status: 'open', total_price: 0.0)
+    session[:cart_id] = cart.id
+    cart
   end
 end
