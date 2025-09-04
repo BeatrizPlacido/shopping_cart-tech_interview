@@ -146,13 +146,6 @@ Esse comando irá subir:
 
 ---
 
-#### Executar testes
-```bash
-docker compose run --rm web bundle exec rspec
-```
-
----
-
 ## Estrutura do projeto
 
 ```
@@ -193,7 +186,7 @@ docker compose run --rm web bundle exec rspec
 
 Para rodar:
 ```bash
-docker-compose run --rm web bundle exec rspec
+docker compose run --rm web bundle exec rspec
 ```
 
 ---
