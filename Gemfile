@@ -2,11 +2,11 @@ source "https://rubygems.org"
 
 ruby "3.3.1"
 
-gem "bootsnap", require: false
-gem "pg", "~> 1.1"
-gem "puma", ">= 5.0"
-gem "rails", "~> 7.1.3", ">= 7.1.3.2"
-gem "tzinfo-data", platforms: %i[ windows jruby ]
+gem 'bootsnap', require: false
+gem 'pg', "~> 1.1"
+gem 'puma', ">= 5.0"
+gem 'rails', "~> 7.1.3", ">= 7.1.3.2"
+gem 'tzinfo-data', platforms: %i[ windows jruby ]
 
 gem 'aasm', '~> 5.5', '>= 5.5.1'
 gem 'active_model_serializers', '~> 0.10.15'
@@ -19,7 +19,8 @@ gem 'guard'
 gem 'guard-livereload', require: false
 
 group :development, :test do
-  gem "debug", platforms: %i[ mri windows ]
+  gem 'debug', platforms: %i[ mri windows ]
+  gem 'factory_bot_rails', '~> 6.5'
   gem 'rspec-rails', '~> 6.1.0'
 end
 
