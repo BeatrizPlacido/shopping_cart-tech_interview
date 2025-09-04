@@ -135,7 +135,7 @@ echo "UID=$(id -u)" > .env && echo "GID=$(id -g)" >> .env
 
 #### 2. Subir a aplicação
 ```bash
-docker-compose up --build
+docker compose up --build
 ```
 
 Esse comando irá subir:
@@ -146,17 +146,9 @@ Esse comando irá subir:
 
 ---
 
-#### 3. Criar banco de dados
-Com os containers em execução:
+#### Executar testes
 ```bash
-docker-compose run --rm web bundle exec rails db:create db:migrate
-```
-
----
-
-#### 4. Executar testes
-```bash
-docker-compose run --rm web bundle exec rspec
+docker compose run --rm web bundle exec rspec
 ```
 
 ---
