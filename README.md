@@ -197,7 +197,7 @@ docker-compose run --rm web bundle exec rspec
 
 ---
 
-## 📌 Resumo
+## Resumo
 
 Essa API fornece a base para um sistema de carrinho de compras em e-commerce, com:
 - CRUD de itens no carrinho
