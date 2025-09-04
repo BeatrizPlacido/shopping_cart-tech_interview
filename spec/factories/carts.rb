@@ -12,5 +12,9 @@ FactoryBot.define do
       status { :expired }
       updated_at { 8.days.ago }
     end
+
+    trait :completed do
+      status { :completed }
+    end
   end
 end
