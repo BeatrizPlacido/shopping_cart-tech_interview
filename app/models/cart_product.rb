@@ -8,6 +8,6 @@ class CartProduct < ApplicationRecord
   private
 
   def update_cart_total
-    cart.update_total_price!
+    cart.update_total_price
   end
 end
