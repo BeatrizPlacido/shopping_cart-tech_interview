@@ -6,7 +6,7 @@ class CartService
   end
 
   def add_product
-    raise ActiveRecord::RecordNotFound, "Product with ID=#{product_id} not found" if @product.blank?
+    raise ActiveRecord::RecordNotFound, "Product with ID=#{product_id} not found" if product.blank?
     raise ArgumentError, 'Quantity must be greater than zero' if quantity.to_i < 1
     raise StandardError, 'Cannot add products to a completed or expired cart' if cart.completed? || cart.expired?
 
@@ -17,7 +17,7 @@ class CartService
   end
 
   def remove_product
-    raise ActiveRecord::RecordNotFound, "Product with ID=#{product_id} not found" if @product.blank?
+    raise ActiveRecord::RecordNotFound, "Product with ID=#{product_id} not found" if product.blank?
 
     remove_product_from_cart
     cart.mark_as_open if cart.abandoned?

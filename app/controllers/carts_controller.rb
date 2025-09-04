@@ -10,6 +10,12 @@ class CartsController < ApplicationController
   end
 
   def create
+    @cart = Cart.create!(status: 'open', total_price: 0.0)
+
+    render json: @cart, serializer: CartSerializer, status: :created
+  end
+
+  def add_item
     product_id = params.require(:product_id)
     quantity = params.require(:quantity)
 
@@ -29,6 +35,7 @@ class CartsController < ApplicationController
   private
 
   def current_cart
+    ## ajustar para pegar o carrinho da sessão
     Cart.last
   end
 end
