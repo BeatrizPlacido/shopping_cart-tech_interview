@@ -1,15 +1,14 @@
 #!/bin/sh
-
 set -e
 
-if [ -f /rails/tmp/pids/server.pid ]; then
-  rm /rails/tmp/pids/server.pid
+if [ -f tmp/pids/server.pid ]; then
+  rm tmp/pids/server.pid
 fi
 
 echo "Checking/installing gems..."
 bundle check || bundle install
 
-echo "Running database migrations..."
-bundle exec rails db:migrate
+echo "Preparing database..."
+bundle exec rails db:prepare
 
 exec "$@"
