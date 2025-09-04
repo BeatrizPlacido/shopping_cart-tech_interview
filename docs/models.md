@@ -1,8 +1,8 @@
-# 🛒 Estrutura do Banco de Dados – Carrinho de Compras
+# Estrutura do Banco de Dados – Carrinho de Compras
 
 Este banco de dados foi modelado para representar um sistema simples de **carrinho de compras**.
 
-## 📋 Tabelas
+## Tabelas
 
 ### **carts** (carrinho de compra)  
 Representa cada carrinho criado por um usuário/sessão.  
@@ -35,19 +35,17 @@ Tabela de associação entre **carts** e **products**, permitindo o relacionamen
 
 ---
 
-## 🔗 Relacionamentos
+## Relacionamentos
 - Um **carrinho (cart)** pode conter vários **produtos (products)**.  
 - Um **produto (product)** pode estar em vários **carrinhos (carts)**.  
 - A tabela **cart_products** faz essa ligação, armazenando também a **quantidade** de cada produto em cada carrinho.  
 
 ---
 
-## 📊 Diagrama
+## Diagrama
 
 Exemplo visual do modelo:
 
-![Diagrama ER](b7f88859-3e1f-4d47-ba5b-29820922eeec.png)
+![alt text](schema-diagram.png)
 
 ---
-
-👉 Esse modelo é a base de um sistema de e-commerce simples, permitindo adicionar produtos ao carrinho, calcular o preço total e gerenciar o status do carrinho.
