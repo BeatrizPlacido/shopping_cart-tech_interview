@@ -124,7 +124,16 @@ A aplicação permite criar carrinhos de compras, adicionar/alterar/remover prod
 
 A aplicação já vem com **Dockerfile** e **docker-compose.yml** configurados.  
 
-#### 1. Subir a aplicação
+#### 1. Configuração Inicial (Passo único por máquina)
+
+Para evitar problemas de permissão de usuário entre sua máquina (host) e os contêineres Docker, é essencial criar um arquivo `.env` para alinhar os IDs de usuário.
+
+Execute o seguinte comando na raiz do projeto:
+```bash
+echo "UID=$(id -u)" > .env && echo "GID=$(id -g)" >> .env
+```
+
+#### 2. Subir a aplicação
 ```bash
 docker-compose up --build
 ```
@@ -137,7 +146,7 @@ Esse comando irá subir:
 
 ---
 
-#### 2. Criar banco de dados
+#### 3. Criar banco de dados
 Com os containers em execução:
 ```bash
 docker-compose run --rm web bundle exec rails db:create db:migrate
@@ -145,7 +154,7 @@ docker-compose run --rm web bundle exec rails db:create db:migrate
 
 ---
 
-#### 3. Executar testes
+#### 4. Executar testes
 ```bash
 docker-compose run --rm web bundle exec rspec
 ```
