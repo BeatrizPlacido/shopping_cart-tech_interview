@@ -10,6 +10,7 @@ Representa cada carrinho criado por um usuário/sessão.
 - `id`: identificador único do carrinho  
 - `total_price`: valor total dos produtos no carrinho  
 - `status`: estado do carrinho (ex.: aberto, abandonado, finalizado)  
+- `last_interaction_at` data da última interação como carrinho
 - `created_at` / `updated_at`: controle de criação e atualização  
 
 ---

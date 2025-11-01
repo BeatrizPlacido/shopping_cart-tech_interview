@@ -6,11 +6,10 @@ class CartService
   end
 
   def add_product
-    raise ActiveRecord::RecordNotFound, "Product with ID=#{product_id} not found" if product.blank?
-    raise ArgumentError, 'Quantity must be greater than zero' if quantity < 1
-    raise StandardError, 'Cannot add products to a completed or expired cart' if cart.completed? || cart.expired?
+    validate!
 
     create_cart_product
+    cart.update_last_interaction
     cart.mark_as_open! if cart.abandoned?
 
     cart.reload
@@ -20,6 +19,7 @@ class CartService
     raise ActiveRecord::RecordNotFound, "Product with ID=#{product_id} not found" if product.blank?
 
     remove_product_from_cart
+    cart.update_last_interaction
     cart.mark_as_open! if cart.abandoned?
 
     cart.reload
@@ -28,6 +28,12 @@ class CartService
   private
 
   attr_reader :cart, :product_id, :quantity
+
+  def validate!
+    raise ActiveRecord::RecordNotFound, "Product with ID=#{product_id} not found" if product.blank?
+    raise ArgumentError, 'Quantity must be greater than zero' if quantity < 1
+    raise StandardError, 'Cannot add products to a completed or expired cart' if cart.completed? || cart.expired?
+  end
 
   def create_cart_product
     return CartProduct.create!(cart:, product:, quantity:) if cart_product.blank?
