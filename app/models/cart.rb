@@ -32,6 +32,9 @@ class Cart < ApplicationRecord
     end
   end
 
+  scope :in_inactive_threshold, -> { where('last_interaction_at < ?', INACTIVITY_THRESHOLD.ago) }
+  scope :in_expired_threshold, -> { where('last_interaction_at < ?', EXPIRED_THRESHOLD.ago) }
+
   def update_total_price
     update!(total_price: calculate_total_price)
   end
