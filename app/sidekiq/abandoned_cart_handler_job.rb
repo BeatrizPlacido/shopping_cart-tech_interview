@@ -1,4 +1,4 @@
-class MarkCartAsAbandonedJob
+class AbandonedCartHandlerJob
   include Sidekiq::Job
 
   def perform

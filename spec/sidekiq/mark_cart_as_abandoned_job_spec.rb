@@ -1,4 +1,4 @@
-RSpec.describe MarkCartAsAbandonedJob, type: :job do
+RSpec.describe AbandonedCartHandlerJob, type: :job do
   subject(:job) { described_class.new }
 
   describe '#perform' do
